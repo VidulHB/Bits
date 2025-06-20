@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>BITS '25</title>
+    <link rel="icon" type="image/x-icon" href="./img/bits-logo.png"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+    <link href="/css/index.css" rel="stylesheet"/>
+    <link href="/css/analytics.css" rel="stylesheet"/>
+    <meta name="google-site-verification" content="s9si15wL98--0NgzGeIO_4Yyv08tzoO_L3TcHHrlhx8" />
+
+
+    <script type="text/javascript">
+        window.smartlook ||
+        (function (d) {
+            var o = (smartlook = function () {
+                    o.api.push(arguments);
+                }),
+                h = d.getElementsByTagName("head")[0];
+            var c = d.createElement("script");
+            o.api = new Array();
+            c.async = true;
+            c.type = "text/javascript";
+            c.charset = "utf-8";
+            c.src = "https://web-sdk.smartlook.com/recorder.js";
+            h.appendChild(c);
+        })(document);
+        smartlook("init", "5444d749ce5fad3604ce36be2187e6afb6d296c7", {
+            region: "eu",
+        });
+    </script>
+</head>
+
+<body>
+
+
+<%- include("partials/nav", { active: "home" , user: username}) %>
+
+
+<main class="main">
+    <section class="landing">
+        <div class="hero">
+            <div class="hero-title">
+                <p>BITS <span>'25</span></p>
+            </div>
+
+            <div class="hero-desc">
+                <p>
+                    BITS, an annual task-based intraschool ICT competition by Ananda
+                    College ICT Society, empowers students to polish their ICT
+                    knowledge and skills across a multitude of fields, fostering
+                    innovation and excellence.
+                </p>
+            </div>
+
+
+            <%if(reg_enabled === false){%>
+            <section style="margin-top: 4em;" class="countdown-container">
+
+                <div class="days-container">
+                    <div class="days">--</div>
+                    <div class="days-label">days</div>
+                </div>
+
+                <div class="dots-container">
+                    <div class="dots">:</div>
+                    <div class="dots-label"> </div>
+                </div>
+
+                <div class="hours-container">
+                    <div class="hours">--</div>
+                    <div class="hours-label">hours</div>
+                </div>
+
+                <div class="dots-container">
+                    <div class="dots">:</div>
+                    <div class="dots-label"> </div>
+                </div>
+
+                <div class="minutes-container">
+                    <div class="minutes">--</div>
+                    <div class="minutes-label">minutes</div>
+                </div>
+
+                <div class="dots-container">
+                    <div class="dots">:</div>
+                    <div class="dots-label"> </div>
+                </div>
+
+                <div class="seconds-container">
+                    <div class="seconds">--</div>
+                    <div class="seconds-label">seconds</div>
+                </div>
+
+            </section>
+
+            <div id="hero-cta" class="hero-cta">
+                <a>Registrations Opening Soon..</a>
+            </div>
+            <%}else{%>
+                <div id="hero-cta" class="hero-cta" style="margin-top: 30px;">
+                    <a href="/tasks">Tasks are released</a>
+                </div>
+            <%}%>
+        </div>
+        <div class="mascot">
+            <img src="/img/comingsoonbot.png"/>
+        </div>
+    </section>
+
+
+    <section class="info">
+
+        <div class="info-title">What is <span>BITS ?</span></div>
+        <div class="info-desc">
+            <p>
+                BITS is an annual intra-school task-based ICT competition, organized
+                by the Ananda College ICT Society(ACICTS), that will be held online
+                for young Anandians from Grades 6 to 11
+
+                This year marks the 7th consecutive time BITS was organized to test
+                the skills and knowledge of young anandians while giving them a
+                unique platform to showcase their talents and provide a valuable
+                opportunity to use their abilities for something intuitive and
+                productive.
+
+                BITS is a task-based ICT competition modelled after international
+                standard competitions like Google Code-In, Summer of Code, etc...
+
+                The participants will be provided a variety of tasks based on
+                various fields of ICT and they are mainly categorized into 3
+                separate categories.
+            </p>
+        </div>
+
+    </section>
+<section class="info">
+
+        <div class="info-title">BITS '25 <span>Timeline,</span></div>
+
+      </section>
+
+
+      <section id="cd-timeline" class="cd-container">
+
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>26th May 2025</h2>
+            <p>Registration opened through the Bits official site</p>
+          </div>
+        </div>
+        
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>29th May 2025</h2>
+            <p>Conducted intoroductory workshop via Google meet</p>
+          </div>
+        </div>
+
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>1st June 2025</h2>
+            <p>Registrations are closed</p>
+          </div>
+        </div>
+
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>2nd June 2025</h2>
+            <p> Released 15 basic tasks</p>
+          </div>
+        </div>
+
+<!--
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>5th April 2024</h2>
+            <p>The first phase of the BITS '24 online quiz competition</p>
+          </div>
+        </div>
+-->
+
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>9th June 2025</h2>
+            <p>Releasing of 15 basic tasks</p>
+          </div>
+        </div>
+
+<!--
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>13th April 2024</h2>
+            <p>The second phase of the BITS '24 online quiz competition</p>
+          </div>
+        </div>
+-->
+
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>16th June 2025</h2>
+            <p>Releasing of 15 basic tasks</p>
+          </div>
+        </div>
+
+<!--
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>21st April 2024</h2>
+            <p>The third phase of the BITS '24 online quiz competition</p>
+          </div>
+        </div>
+-->
+
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>21st June 2025</h2>
+            <p>Releasing 9 advanced tasks (3 for each category)</p>
+          </div>
+        </div>
+
+<!--
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>28th April 2024</h2>
+            <p>BITS '24 final quiz competition</p>
+          </div>
+        </div>
+-->
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>27th June 2025</h2>
+            <p>Task submissions closing</p>
+          </div>
+        </div>
+
+
+        <div class="cd-timeline-block">
+          <div class="cd-timeline-img cd-movie">
+          </div>
+
+          <div class="cd-timeline-content">
+            <h2>30th June 2025</h2>
+            <p>Announcing winners</p>
+          </div>
+        </div>
+
+
+      </section>
+</main>
+<%- include("partials/footer", { active: "home" }) %>
+
+<script>
+    // var countDownDate = new Date("MAY 26, 2025 18:00:00").getTime();
+    //
+    // var x = setInterval(function () {
+    //     var now = new Date().getTime();
+    //     var distance = countDownDate - now;
+    //     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    //
+    //     var hours = Math.floor(
+    //         (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    //     );
+    //     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    //     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    //     /*document.getElementById("time").innerHTML =
+    //     "" + days + "d " + hours + "h " + minutes + "m " + seconds + "s Left";*/
+    //
+    //     var xSeconds = days * 86400 + hours * 3600 + minutes * 60 + seconds;
+    //
+    //
+    //     const countDownClock = (number = 100, format = 'seconds') => {
+    //
+    //         const d = document;
+    //         const daysElement = d.querySelector('.days');
+    //         const hoursElement = d.querySelector('.hours');
+    //         const minutesElement = d.querySelector('.minutes');
+    //         const secondsElement = d.querySelector('.seconds');
+    //         let countdown;
+    //         convertFormat(format);
+    //
+    //
+    //         function convertFormat(format) {
+    //             switch (format) {
+    //                 case 'seconds':
+    //                     return timer(number);
+    //                 case 'minutes':
+    //                     return timer(number * 60);
+    //                 case 'hours':
+    //                     return timer(number * 60 * 60);
+    //                 case 'days':
+    //                     return timer(number * 60 * 60 * 24);
+    //             }
+    //         }
+    //
+    //         function timer(seconds) {
+    //             const now = Date.now();
+    //             const then = now + seconds * 1000;
+    //
+    //             countdown = setInterval(() => {
+    //                 const secondsLeft = Math.round((then - Date.now()) / 1000);
+    //
+    //                 if (secondsLeft <= 0) {
+    //                     clearInterval(countdown);
+    //                     return;
+    //                 }
+    //
+    //
+    //                 displayTimeLeft(secondsLeft);
+    //
+    //             }, 1000);
+    //         }
+    //
+    //         function displayTimeLeft(seconds) {
+    //             daysElement.textContent = Math.floor(seconds / 86400);
+    //             hoursElement.textContent = Math.floor((seconds % 86400) / 3600);
+    //             minutesElement.textContent = Math.floor((seconds % 86400) % 3600 / 60);
+    //             secondsElement.textContent = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
+    //         }
+    //     }
+    //
+    //
+    //     /*
+    //       start countdown
+    //       enter number and format
+    //       days, hours, minutes or seconds
+    //     */
+    //     clearInterval(x);
+    //     countDownClock(xSeconds, 'seconds');
+    //
+    //     //document.getElementById("hero-cta").innerHTML = "Registerations Opening Soon";
+    //
+    //
+    //     if (distance < 0) {
+    //         clearInterval(x);
+    //         document.getElementById("hero-cta").innerHTML = "Register";
+    //         document.getElementById("hero-cta").setAttribute("href", "/signup");
+    //     }
+    // }, 1000);
+</script>
+
+<script>
+
+</script>
+
+<script>
+    const notificationContainer = document.getElementById(
+        "notification-container"
+    );
+    const NOTIFICATION_TYPES = {
+        SUCCESS: "success",
+    };
+
+    function addNotification(type, text) {
+        const newNotification = document.createElement("div");
+        newNotification.classList.add("notification", `notification-${type}`);
+
+        const innerNotification = `
+        <i class="fa-solid fa-circle-check"></i> ${text} <u><a href="/quiz">Go to Quiz Page</a></u>
+       `;
+
+        newNotification.innerHTML = innerNotification;
+
+        notificationContainer.appendChild(newNotification);
+
+        return newNotification;
+    }
+
+    function removeNotification(notification) {
+        notification.classList.add("hide");
+
+        setTimeout(() => {
+            notificationContainer.removeChild(notification);
+        }, 500);
+    }
+
+    /*
+ setTimeout(() => {
+    const success = addNotification(NOTIFICATION_TYPES.SUCCESS, 'Fourth Quiz Date has been announced.');
+    setTimeout(() => {
+      removeNotification(success);
+    }, 15000);
+ }, 1000);*/
+</script>
+
+
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    window.OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+            appId: "b2b17d5d-8fc2-44a1-829d-9a8028b649d2",
+            notifyButton: {
+                enable: true
+            },
+            serviceWorkerParam: {scope: "/img/"},
+            serviceWorkerPath: "img/OneSignalSDKWorker.js",
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BITS '25 | Quiz</title>
+    <link rel="icon" type="image/x-icon" href="./img/bits-logo.png">
+
+    <link rel="stylesheet" href="./css/sweetalert2.min.css">
+    <script src="./js/sweetalert2.min.js"></script>
+    <script src="./js/functions.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="/css/onlinetests.css" rel="stylesheet">
+
+    <script type='text/javascript'>
+        window.smartlook || (function (d) {
+            var o = smartlook = function () {
+                    o.api.push(arguments)
+                },
+                h = d.getElementsByTagName('head')[0];
+            var c = d.createElement('script');
+            o.api = new Array();
+            c.async = true;
+            c.type = 'text/javascript';
+            c.charset = 'utf-8';
+            c.src = 'https://web-sdk.smartlook.com/recorder.js';
+            h.appendChild(c);
+        })(document);
+        smartlook('init', '5444d749ce5fad3604ce36be2187e6afb6d296c7', {
+            region: 'eu'
+        });
+    </script>
+</head>
+
+<body>
+<%- include('partials/nav', {active: "test" , user: username}) %>
+<main class="main">
+    <section class="tasks">
+        <div class="task-list">
+            <% filteredQuiz.forEach(function(data) { %>
+            <div class="task-item <% if(data.test_link[0] === "Start Quiz"){ %> task-attension <% } %>">
+                <div class="ti-bg-acnt tibg-tr"></div>
+                <div class="ti-bg-acnt tibg-bl"></div>
+
+                <div class="ti-info">
+                    <h4>
+                        <%= data.test_name %>
+                    </h4>
+                    <p>
+                        <%= data.test_description %>
+                    </p><br>
+                    <p><i class="fa-solid fa-location-dot"></i>&nbsp; Quiz Venue: <%= data.venue %>
+                    </p>
+                    <p><i class="fa-solid fa-calendar-days"></i>&nbsp; Quiz Date: <%= data.test_dateTime %>
+                    </p>
+                    <p><i class="fa-solid fa-clock"></i>&nbsp; Quiz Time: <%= data.time %>
+                    </p>
+                    <p><i class="fa-solid fa-hourglass-start"></i>&nbsp; Quiz Duration: <%= data.test_duration %>min
+                    </p>
+
+                    <p>Please take a moment to review the following <a
+                                style="color:blanchedalmond; text-decoration: underline;" href="/help#quizRNR">rules
+                            and
+                            regulations</a></p>
+                </div>
+                <% const validValues = ['Submission Recorded', 'Submission Evaluated', 'Quiz Ended'] %>
+                <% if (data.test_link[1] !== "" ) { %>
+                    <% if (data.test_link[0] === "Start Quiz"){ %>
+                        <a href="<%= data.test_link[1] %>">
+                            <button class="testLinkButton testLinkButtonWithLink">
+                                <%= data.test_link[0] %>
+                            </button>
+                        </a>
+                    <% } else if(data.test_link[0] !== ""){ %>
+                        <button class="testLinkButton" style="cursor: not-allowed">
+                            <%= data.test_link[0] %>
+                        </button>
+                    <% } %>
+                <% } else if (validValues.includes(data.test_link[0]) === true) { %>
+                    <button class="testLinkButton" style="cursor: not-allowed">
+                        <%= data.test_link[0] %>
+                    </button>
+                <% } %>
+            </div>
+            <% }) %>
+            <% if(filteredQuiz.length === 0){ %>
+                <p style="color: rgba(219, 229, 255, 0.7568627451);">No quzzies scheduled!</p>
+            <% } %>
+        </div>
+    </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+
+<%- include("partials/footer", { active: "test" }) %>
+</body>
+
+</html>

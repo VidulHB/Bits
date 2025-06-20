@@ -1,0 +1,38 @@
+{
+  "name": "bits-25",
+  "version": "1.0.0",
+  "description": "Website of BITS'25 by ACICTS",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "luxon": "^3.6.1",
+    "mongoose": "^8.15.1",
+    "nodemailer": "^7.0.3",
+    "nodemon": "2.0.15",
+    "uuid": "^11.1.0"
+  },
+  "scripts": {
+    "nodemon": "nodemon server.js",
+    "sass-build": "sass --style=expanded --no-source-map views/css:views/css",
+    "sass-dev": "sass --watch --update --style=expanded --no-source-map views/css:views/css",
+    "dev": "npm-run-all --parallel nodemon sass-dev",
+    "build": "npm run sass-build",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PasinduDushan/BITS24"
+  },
+  "author": "Pasindu Ranasinghe",
+  "license": "MIT",
+  "homepage": "https://github.com/PasinduDushan/BITS24",
+  "devDependencies": {
+    "npm-run-all": "4.1.5",
+    "sass": "1.55.0"
+  }
+}

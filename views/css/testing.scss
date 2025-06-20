@@ -1,0 +1,197 @@
+// NOTE: Uses the same CSS as taskdata.scss
+
+@use "sass:meta";
+@import "./main";
+
+.main {
+  width: 100%;
+  padding: 2em 6em 0 6em;
+  min-height: 88vh;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.testName {
+  color: $col-light;
+}
+
+.testDescription {
+  color: $col-light;
+  margin-bottom: 2.5em;
+}
+
+.progressBar {
+  height: 80px;
+  width: 100%;
+  position: sticky;
+  top: 0; /* Stick to the top of the viewport */
+  z-index: 1000; /* Adjust the z-index as needed */
+  padding: 10px 0 0 0;
+  background: linear-gradient(#050f19, #050f1900);
+
+  .outerBar {
+    height: 30px;
+    width: 100%;
+    border: 1px solid #ffffff50;
+    border-radius: 13px;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  .innerBar {
+    height: 20px;
+    width: calc(100% - 10px);
+    margin: 0 5px;
+    background: linear-gradient(
+      110deg,
+      $col-acnt-light 0%,
+      $col-acnt-dark 100%
+    );
+    box-shadow: 10px 0 80px 2px $col-acnt-dark, -10px 0 80px 2px $col-acnt-light;
+    transform: translateY(-25px);
+    border-radius: 10px;
+  }
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  
+  .questions-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .question-card {
+    position: relative;
+    background: rgba(41, 48, 69, 0.42);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(41, 48, 69, 0.33);
+    border-radius: 24px;
+    padding: 2.2em 3em 3em 3em;
+    margin: 2em 0;
+    overflow: hidden;
+    width: 100%;
+
+    h4 {
+      color: $col-light;
+      font-size: 1.3em;
+      margin-bottom: 1em;
+    }
+
+    input {
+      color: $col-ti-desc;
+      font-size: 1em;
+      opacity: 0;
+    }
+
+    .answerLabels {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .answerBox {
+        background-color: $col-bg;
+        padding: 12px 18px;
+        border-radius: 10px;
+        color: $col-ti-desc;
+        font-size: 1em;
+        transition: 0.3s;
+      }
+
+      .answerBox:hover {
+        background-color: $col-sb-div;
+        color: white;
+      }
+
+      .selected {
+        background: linear-gradient(
+          110deg,
+          $col-acnt-light 0%,
+          $col-acnt-dark 100%
+        );
+        box-shadow: 10px 0 80px 2px #050f1970, -10px 0 80px 2px #050f1970;
+      }
+
+      .selected:hover {
+        color: white;
+      }
+    }
+  }
+  .sumbitButton {
+    margin-left: auto;
+    width: fit-content;
+    background: linear-gradient(
+      110deg,
+      $col-acnt-light 0%,
+      $col-acnt-dark 100%
+    );
+    padding: 1em 3em;
+    border-radius: 10px;
+    color: $col-light;
+    border: none;
+    cursor: pointer;
+    margin-top: 3em;
+    font-size: 0.9em;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .main {
+    padding: 0em 4em 0 4em;
+    .questions {
+      flex-direction: column;
+      gap: 1em;
+
+      .ti-info p {
+        height: auto;
+      }
+
+      .questions-list {
+        width: 100%;
+      }
+
+      .question-card {
+        margin: 1em 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    padding: 0em 2em 0 2em;
+
+    .questions {
+      .question-card {
+        width: 100%;
+        padding: 1.6em 2em;
+        // text-align: center;
+
+        .ti-info {
+          width: 100%;
+        }
+
+        .ti-info p {
+          height: auto;
+        }
+      }
+      .sumbitButton {
+        margin-top: 1em;
+      }
+    }
+  }
+}
+
+@media print {
+  .main {
+    display: none;
+  }
+}

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BITS'25 | Users</title>
+    <link rel="icon" type="image/x-icon" href="/img/bits-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="/css/users.css" rel="stylesheet">
+    <script type='text/javascript'>
+        window.smartlook || (function (d) {
+            var o = smartlook = function () {
+                o.api.push(arguments)
+            }, h = d.getElementsByTagName('head')[0];
+            var c = d.createElement('script');
+            o.api = new Array();
+            c.async = true;
+            c.type = 'text/javascript';
+            c.charset = 'utf-8';
+            c.src = 'https://web-sdk.smartlook.com/recorder.js';
+            h.appendChild(c);
+        })(document);
+        smartlook('init', '5444d749ce5fad3604ce36be2187e6afb6d296c7', {region: 'eu'});
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body oncontextmenu="return false;" style=" -webkit-user-select: none; /* Safari */
+-ms-user-select: none; /* IE 10 and IE 11 */
+user-select: none; /* Standard syntax */">
+<%- include("partials/nav", { active: "" , user: username}) %>
+
+<header class="header">
+    <div class="header-welcome">Select Grade:</div>
+    <select name="task-cat" id="cat-selector">
+        <option selected tagName="6">Grade 6</option>
+        <option tagName="7">Grade 7</option>
+        <option tagName="8">Grade 8</option>
+        <option tagName="9">Grade 9</option>
+        <option tagName="10">Grade 10</option>
+        <option tagName="11">Grade 11</option>
+    </select>
+</header>
+
+<main class="main">
+
+    <section class="leaderboard">
+        <div class="thead">
+            <p class="tfield-no">#</p>
+            <p class="tfield-name">FullName</p>
+            <p class="tfield-username">Username</p>
+            <p class="tfield-email">Email</p>
+            <p class="tfield-id">User ID</p>
+            <p class="tfield-date">Date & Time</p>
+            <p class="tfield-admission">Admission No.</p>
+        </div>
+        <table>
+            <tbody>
+            <% let user = 0 %>
+            <% users.forEach((usr) => { %>
+            <tr class="<%=usr.grade%> <%if(usr.grade === "6"){%>selected<%}%>" >
+                <th class="tfield-no">
+                    <%= user+1 %>
+                </th>
+                <td class="tfield-name">
+                    <%= usr.name %>
+                </td>
+                <td class="tfield-username">
+                    <%= usr.username %>
+                </td>
+                <td class="tfield-email">
+                    <%= usr.email %>
+                </td>
+                <td class="tfield-id">
+                    <%= usr.id %>
+                </td>
+                <td class="tfield-date">
+                    <%= usr.date.toString().replace("GMT+0000 (Coordinated Universal Time)", "") %>
+                </td>
+                <td class="tfield-admission">
+                    <%= usr.admission %>
+                </td>
+            </tr>
+            <% user++ %>
+            <% }) %>
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+<script>
+    $('#cat-selector').on("change", function () {
+        let selector = $("#cat-selector option:selected").attr('tagName')
+        $(".leaderboard").find("tr").removeClass("selected")
+        $(".leaderboard").find(`.${selector}`).addClass("selected")
+    })
+</script>
+
+<%- include("partials/footer", { active: "lead" }) %>
+</body>
+
+</html>

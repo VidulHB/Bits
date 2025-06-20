@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>BITS '25 | Quiz</title>
+    <link rel="icon" type="image/x-icon" href="./img/bits-logo.png"/>
+
+    <link rel="stylesheet" href="./css/sweetalert2.min.css"/>
+    <script src="./js/sweetalert2.min.js"></script>
+    <script src="./js/functions.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+    <link href="/css/quiz.css" rel="stylesheet"/>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        window.smartlook ||
+        (function (d) {
+            var o = (smartlook = function () {
+                    o.api.push(arguments);
+                }),
+                h = d.getElementsByTagName("head")[0];
+            var c = d.createElement("script");
+            o.api = new Array();
+            c.async = true;
+            c.type = "text/javascript";
+            c.charset = "utf-8";
+            c.src = "https://web-sdk.smartlook.com/recorder.js";
+            h.appendChild(c);
+        })(document);
+        smartlook("init", "5444d749ce5fad3604ce36be2187e6afb6d296c7", {
+            region: "eu",
+        });
+    </script>
+</head>
+
+<body>
+<%- include('partials/nav', {active: "test" , user: username}) %>
+<main class="main">
+    <h1 class="testName"><%= quiz.title %></h1>
+    <p class="testDescription"><%= quiz.description %></p>
+    <p style="color: aliceblue; display: none;" id="timer1">
+        <%= quiz.durationLeft %>
+    </p>
+    <div class="progressBar">
+        <p style="color: #DCE7FE;" id="timer">0<%=(new Date(quiz.endTime).getHours() - new Date(quiz.startTime).getHours())%>:<%=(new Date(quiz.endTime).getMinutes() - new Date(quiz.startTime).getMinutes())%>:00</p>
+        <div class="outerBar"></div>
+        <div class="innerBar" id="innerBar"></div>
+    </div>
+    <section class="questions">
+        <div class="question-list">
+            <form id="quiz" action="/quiz/submit/<%= quiz.id %>" method="post">
+                <% let i = 1 %>
+                <% quiz.questions.forEach(function(data) { %>
+                    <div class="question-card">
+                        <h4><%= data.question %></h4>
+
+                        <input required type="radio" id="<%= "q" + i + "_ans1" %>" name="<%= "q" + i %>"
+                               value="<%= data.id %> ; 1" onchange="changeTheSelected('<%= i %>','1')"/>
+                        <input required type="radio" id="<%= "q" + i + "_ans2" %>" name="<%= "q" + i %>"
+                               value="<%= data.id %> ; 2" onchange="changeTheSelected('<%= i %>','2')"/>
+                        <input required type="radio" id="<%= "q" + i + "_ans3" %>" name="<%= "q" + i %>"
+                               value="<%= data.id %> ; 3" onchange="changeTheSelected('<%= i %>','3')"/>
+                        <input required type="radio" id="<%= "q" + i + "_ans4" %>" name="<%= "q" + i %>"
+                               value="<%= data.id %> ; 4" onchange="changeTheSelected('<%= i %>','4')"/>
+
+                        <div class="answerLabels">
+                            <label style="cursor: pointer;" class="answerBox" id="<%= "q" + i + "_ans1_label" %>"
+                                   for="<%= "q" + i + "_ans1" %>">1 . <%= data.answers[0] %></label>
+                            <label style="cursor: pointer;" class="answerBox" id="<%= "q" + i + "_ans2_label" %>"
+                                   for="<%= "q" + i + "_ans2" %>">2 . <%= data.answers[1] %></label>
+                            <label style="cursor: pointer;" class="answerBox" id="<%= "q" + i + "_ans3_label" %>"
+                                   for="<%= "q" + i + "_ans3" %>">3 . <%= data.answers[2] %></label>
+                            <label style="cursor: pointer;" class="answerBox" id="<%= "q" + i + "_ans4_label" %>"
+                                   for="<%= "q" + i + "_ans4" %>">4 . <%= data.answers[3] %></label>
+                        </div>
+
+                        <input required type="radio" id="<%= "q" + i + "_default" %>" name="<%= "q" + i %>"
+                               value="<%= data.id %> ; " checked hidden/>
+                    </div>
+                    <% i++ %>
+                <% }) %>
+                <input required type="number" id="penalties" name="penalties" value="0" hidden>
+        <button type="submit" class="sumbitButton">Submit</button>
+        </form>
+        </div>
+    </section>
+</main>
+<div id="toast">
+    <h3><i class="fa-solid fa-clock"></i> Penalty</h3>
+    <p>You lost 10 minutes of your time for leaving the page</p>
+</div>
+<script>
+    const progressBar = document.getElementById('innerBar');
+    const form = document.getElementById('quiz');
+
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    function changeTheSelected(value, name) {
+        document.getElementById("q" + value + "_ans1_label").classList.remove("selected");
+        document.getElementById("q" + value + "_ans2_label").classList.remove("selected");
+        document.getElementById("q" + value + "_ans3_label").classList.remove("selected");
+        document.getElementById("q" + value + "_ans4_label").classList.remove("selected");
+        document.getElementById("q" + value + "_ans" + name + "_label").classList.add("selected");
+    }
+
+    function startTimer(duration, display) {
+        var timer = duration,
+            hours, minutes, seconds;
+        var interval = setInterval(function () {
+            hours = parseInt(timer / 3600, 10);
+            minutes = parseInt((timer % 3600) / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = hours + ":" + minutes + ":" + seconds + " | 01:00:00";
+
+            let width = (timer / <%=quiz.duration*60%>) * 100;
+            progressBar.style.width = 'calc(max(' + width + '%, 25px) - 10px)';
+
+            if (--timer < 0) {
+                clearInterval(interval);
+                progressBar.style.width = '0';
+                form.submit();
+                timer = duration;
+            }
+        }, 1000);
+    }
+
+    let unloads = 0
+    let timeoutside = 0;
+    document.addEventListener('visibilitychange', () => {
+        let outsideInterval = setInterval(function () {timeoutside++}, 1000)
+        if (document.visibilityState === 'hidden') {
+            unloads++
+            timeoutside = 0
+        } else if (document.visibilityState === 'visible') {
+            if (unloads > 1) {
+                if(timeoutside > 5) {
+                    setTimeout(function () {
+                        $('#toast > p').text(`You have received ${(timeoutside*2)/60} penalty points for leaving the page.`)
+                        $('#toast').addClass('show')
+                        $('#penalties').attr('value', `${$('#penalties').attr('value') + (timeoutside*2)/60}`)
+                        timeoutside = 0
+                        setTimeout(function () {
+                            $('#toast').removeClass('show')
+                        }, 5000)
+                    }, 250)
+                }
+            }
+        }
+    });
+
+    window.onload = function () {
+        const timeLeft = document.getElementById('timer1');
+        var totalSeconds = parseInt(timeLeft.innerHTML, 10),
+            display = document.querySelector('#timer');
+        startTimer(totalSeconds, display);
+    };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+
+<%- include("partials/footer", { active: "test" }) %>
+</body>
+
+</html>

@@ -1,0 +1,288 @@
+@import "./main";
+
+.main {
+    padding: 6em 6em 0 6em;
+    min-height: 88vh;
+}
+.leaderboard {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+  
+
+    .thead {
+        display: flex;
+        flex-direction: row;
+        background-color: $col-ti-bg;
+        color: $col-light;
+        padding: 1.5em 2.5em;
+        border-radius: 16px;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: calc(100% - 5em);
+        margin: .8em auto;
+        
+        tbody {
+            color: $col-light;
+
+            tr {
+                border-bottom: 1px solid $col-sb-placeholder;
+            }
+
+            th, td {
+                padding: .8em 0;
+            }
+        }
+    }
+
+    .tfield-rank {
+        text-align: left;
+        width: 10%;
+    }
+    .tfield-name {
+        text-align: left;
+        width: 30%;
+    }
+    .tfield-grade {
+        text-align: center;
+        width: 20%;
+    }
+    .tfield-tasks {
+        text-align: left;
+        width: 20%;
+    }
+    .tfield-points {
+        text-align: right;
+        width: 20%;
+    }
+
+}
+
+@media screen and (max-width: 1024px) {
+    .main {
+        padding: 6em 2em 0 2em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main {
+        padding: 4em 0 0 0;
+        overflow-x: auto;
+        font-size: .9em;
+
+        .leaderboard {
+            width: 40em;
+
+            .thead {
+                padding: 1.5em 2em;
+            }
+
+            table {
+                width: calc(100% - 4em);
+            }
+        }
+    }
+}
+
+
+
+.rankings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 4rem;
+    margin-bottom: 5rem;
+  
+    .rank-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 2rem 1rem;
+      background-color: $col-ti-bg;
+      border-radius: 16px;
+      color: $col-light;
+      text-align: center;
+      // overflow: hidden;
+      position: relative;
+      margin: 1rem 0;
+      transition: .2s;
+  
+      &:hover {
+        transform: scale(1.02);
+      }
+  
+      &:active {
+        transform: scale(.98);
+      }
+  
+      .rank-card-mask {
+        overflow: hidden;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+  
+  
+        .rank-card-acnt {
+          position: absolute;
+          width: 0;
+          height: 0;
+          box-shadow: 0 0 200px 40px $col-acnt-mid;
+        }
+  
+        .rcbg-tr {
+          top: 0;
+          right: 5em;
+        }
+  
+        .rcbg-bl {
+          bottom: 0;
+          left: 5em;
+        }
+      }
+  
+      // border: 2px solid rgba($col-acnt-mid, .5);
+      // box-shadow: 0 0 32px 4px rgba($col-acnt-mid, .25);
+  
+      .rank-card-title {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+  
+      .rank-card-info {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+  
+        .rank-card-contestant {
+          font-size: 2em;
+        }
+      }
+  
+      .rank-card-stars {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: .2em;
+        font-size: 2.2em;
+      }
+  
+      $col-gold-mid: #FFCA09;
+      $col-silver-mid: #C0C0C0;
+      $col-bronze-mid: #CF7F32;
+  
+      &.rank- {
+        &gold {
+          font-size: 1.2rem;
+          margin: 0;
+  
+          border: 2px solid rgba($col-gold-mid, .5);
+          box-shadow: 0 0 32px 4px rgba($col-gold-mid, .25);
+  
+          .rank-card-title {
+            color: $col-gold-mid;
+            @include gradientText($col-gold-mid, $col-gold-mid, 100px);
+          }
+  
+          .rank-card-acnt {
+            box-shadow: 0 0 200px 40px $col-gold-mid;
+          }
+  
+          .rank-card-stars {
+            color: $col-gold-mid;
+            @include gradientText($col-gold-mid, $col-gold-mid, 20px);
+          }
+        }
+  
+        &silver {
+          border: 2px solid rgba($col-silver-mid, .5);
+          box-shadow: 0 0 32px 4px rgba($col-silver-mid, .25);
+  
+          .rank-card-title {
+            color: $col-silver-mid;
+            @include gradientText($col-silver-mid, $col-silver-mid, 100px);
+          }
+  
+          .rank-card-acnt {
+            box-shadow: 0 0 200px 40px $col-silver-mid;
+          }
+  
+          .rank-card-stars {
+            color: $col-silver-mid;
+            @include gradientText($col-silver-mid, $col-silver-mid, 20px);
+          }
+  
+        }
+  
+        &bronze {
+          border: 2px solid rgba($col-bronze-mid, .5);
+          box-shadow: 0 0 32px 4px rgba($col-bronze-mid, .25);
+  
+          .rank-card-title {
+            color: $col-bronze-mid;
+            @include gradientText($col-bronze-mid, $col-bronze-mid, 100px);
+          }
+  
+          .rank-card-acnt {
+            box-shadow: 0 0 200px 40px $col-bronze-mid;
+          }
+  
+          .rank-card-stars {
+            color: $col-bronze-mid;
+            @include gradientText($col-bronze-mid, $col-bronze-mid, 20px);
+          }
+  
+        }
+      }
+    }
+  }
+  
+  @media screen and (max-width: 1024px) {
+    .main {
+      padding: 6em 2em 0 2em;
+  
+      .rankings {
+        gap: 2rem;
+      }
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .main {
+      padding: 4em 0 0 0;
+      overflow-x: auto;
+      font-size: .9em;
+  
+      .leaderboard {
+        width: 40em;
+  
+        .thead {
+          padding: 1.5em 2em;
+        }
+  
+        table {
+          width: calc(100% - 4em);
+        }
+      }
+  
+      .rankings {
+        flex-direction: column;
+      }
+    }
+  
+  }

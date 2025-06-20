@@ -1,0 +1,128 @@
+// NOTE: Uses the same CSS as taskdata.scss
+
+@use "sass:meta";
+@import "./main";
+
+.main {
+  width: 100%;
+  padding: 4em 6em 0 6em;
+  min-height: 88vh;
+  color: aliceblue;
+}
+
+.textBox {
+  width: 100%;
+  font-size: 0.9em;
+  color: $col-ti-desc;
+  padding: 0.8em 1.5em;
+  border-radius: 8px;
+  background-color: $col-ti-tag;
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    font-style: italic;
+    color: $col-sb-placeholder;
+  }
+
+  &:focus {
+    padding-bottom: calc(0.8em - 2px);
+    border-bottom: 2px solid $col-acnt-light;
+  }
+
+  &.input-invalid {
+    padding-bottom: calc(0.8em - 2px);
+    border-bottom: 2px solid $col-red-light;
+  }
+}
+
+.questions {
+  .sumbitButton {
+    width: fit-content;
+    background: linear-gradient(
+      110deg,
+      $col-acnt-light 0%,
+      $col-acnt-dark 100%
+    );
+    padding: 1em 3em;
+    border-radius: 10px;
+    color: $col-light;
+    border: none;
+    cursor: pointer;
+    margin-top: 3em;
+    font-size: 0.9em;
+    margin-bottom: 4em;
+  }
+
+  .question-card {
+    position: relative;
+    background: rgba(41, 48, 69, 0.42);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(41, 48, 69, 0.33);
+    border-radius: 24px;
+    padding: 2.2em 3em 3em 3em;
+    margin: 2em 0;
+    overflow: hidden;
+    width: 100%;
+
+    .ans-fields-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      .ans-fields {
+        display: flex;
+        gap: 20px;
+
+        .radioButton {
+          width: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .main {
+    padding: 0em 4em 0 4em;
+    .tasks {
+      flex-direction: column-reverse;
+      gap: 2em;
+
+      .ti-info p {
+        height: auto;
+      }
+
+      .task-list {
+        width: 100%;
+      }
+
+      .task-item {
+        margin: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    padding: 0em 2em 0 2em;
+
+    .tasks {
+      .task-item {
+        width: 100%;
+        padding: 1.6em 2em;
+        // text-align: center;
+
+        .ti-info {
+          width: 100%;
+        }
+
+        .ti-info p {
+          height: auto;
+        }
+      }
+    }
+  }
+}

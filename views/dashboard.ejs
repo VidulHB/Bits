@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BITS '25 | Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/img/bits-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script type='text/javascript'>
+        window.smartlook || (function (d) {
+            var o = smartlook = function () {
+                o.api.push(arguments)
+            }, h = d.getElementsByTagName('head')[0];
+            var c = d.createElement('script');
+            o.api = new Array();
+            c.async = true;
+            c.type = 'text/javascript';
+            c.charset = 'utf-8';
+            c.src = 'https://web-sdk.smartlook.com/recorder.js';
+            h.appendChild(c);
+        })(document);
+        smartlook('init', '5444d749ce5fad3604ce36be2187e6afb6d296c7', {region: 'eu'});
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+<%- include("partials/nav", {active: "", user: username}) %>
+
+<header class="header">
+    <div class="header-text">
+        <div class="header-welcome">
+            <h1>Welcome, <%= username %></h1>
+        </div>
+        <div class="header-user">
+            <p>Lets abuse some powers</p>
+        </div>
+
+    </div>
+    <div class="header-buttons">
+        <div class="header-btn" style="justify-content: center; text-align: center; align-content: center;"><a
+                    href="/admin/submissions">Submissions</a></div>
+        <div class="header-btn" style="justify-content: center; text-align: center; align-content: center;"><a
+                    href="/admin/users">Users</a></div>
+        <% if(!data.competition_enabled){ %>
+            <form action="/admin/competition/enable" method="post" id="enable">
+                <div class="header-btn ti-green" onclick="submitform(this)">
+                    <a>Enable Competition</a>
+                </div>
+            </form>
+        <% }else{ %>
+            <form action="/admin/competition/disable" method="post" id="disable">
+                <div class="header-btn ti-red" onclick="submitform(this)">
+                    <a>Disable Competition</a>
+                </div>
+            </form>
+        <% } %>
+    </div>
+</header>
+
+<main class="main">
+    <section class="tasks-cat">
+        <div class="tasks-item-wrapper">
+            <div class="task-item-s">
+                <h1>Create Task</h1>
+                <br/><br/>
+                <form
+                        id="taskform"
+                        class="needs-validation"
+                        method="POST"
+                        action="/task/addtask/success"
+                >
+                    <div>
+                        <h3>Task Name</h3>
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="title"
+                                id="validationCustom01"
+                                placeholder="A Beautiful Task"
+                                required
+                        />
+                    </div>
+                    <br/>
+                    <div>
+                        <h3>Small Description</h3>
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="smalldescription"
+                                id="validationCustom01"
+                                placeholder="A Beautiful small description for the beautiful task"
+                                maxlength="100"
+                                required
+                        />
+                    </div>
+                    <br/>
+                    <div>
+                        <h3>Big Description</h3>
+                        <textarea
+                                class="form-control"
+                                placeholder="A nice big detailed description"
+                                id="floatingTextarea"
+                                name="bigdescription" required></textarea>
+                    </div>
+                    <br/>
+                    <div>
+                        <h3>Max marks</h3>
+                        <input
+                                type="number"
+                                class="form-control"
+                                name="max_marks"
+                                id="validationCustom01"
+                                placeholder="Enter the max marks for the task"
+                                max="100"
+                                required
+                        />
+                    </div>
+                    <br/>
+                    <div>
+                        <h3>Task Category:</h3>
+                        <select name="category" id="condition">
+                            <option value="CODING" selected>Coding</option>
+                            <option value="DESIGN">Design</option>
+                            <option value="EXPLORE">Explore</option>
+                        </select>
+                        <br/>
+                    </div>
+                    <div>
+                        <h3>Advance Task?</h3>
+                        <select name="advance" id="condition">
+                            <option value="false" selected>No</option>
+                            <option value="true">Yes</option>
+                        </select
+                        ><br/><br/>
+                    </div>
+                    <div class="ti-cta ti-green" onclick="submitform(this)">
+                        <a>Create Task</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="task-item-s">
+                <h1>Create Quiz</h1>
+                <br/><br/>
+                <form
+                        id="quizform"
+                        class="needs-validation"
+                        method="POST"
+                        action="/admin/test/add"
+                >
+                    <div class="">
+                        <h3>Quiz Name</h3>
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="name"
+                                placeholder="A Beautiful Test"
+                                required
+                        />
+                    </div>
+                    <br/><br/>
+                    <div>
+                        <h3>Small Description</h3>
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="description"
+                                placeholder="A Beautiful small description for the beautiful test"
+                                maxlength="100"
+                                required
+                        />
+                    </div>
+                    <br/><br/>
+                    <div>
+                        <h3>Venue</h3>
+                        <input
+                                type="text"
+                                class="form-control"
+                                name="venue"
+                                placeholder="Online / [Physical Location]"
+                                maxlength="100"
+                                required
+                        />
+                    </div>
+                    <br/><br/>
+                    <div>
+                        <h3>Quiz Date and Time</h3>
+                        <input
+                                type="datetime-local"
+                                class="form-control"
+                                name="dateTime"
+                                maxlength="2000"
+                                required
+                        />
+                        <br/><br/>
+                    </div>
+                    <div>
+                        <h3>Quiz Type</h3>
+                        <select name="type" id="condition">
+                            <option value="junior" selected>Junior</option>
+                            <option value="senior">Senior</option>
+                        </select>
+                        <br/><br/>
+                        <br/><br/><br/>
+                    </div>
+                    <div class="ti-cta ti-green" onclick="submitform(this)">
+                        <a>Create Quiz</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="tasks-cat">
+        <div class="tasks-item-wrapper">
+            <div class="task-item-s">
+                <h1>Send Email</h1>
+                <br/><br/>
+                <form id="emailform" action="/admin/email/send/bits" method="post">
+                    <div class="">
+                        <h3>Email Subject</h3>
+                        <input type="text" class="form-control" name="subject" id="validationCustom01"
+                               placeholder="Subject of the Email" maxlength="100" required>
+                    </div>
+                    <br/>
+                    <div class="">
+                        <h3>Email Message</h3>
+                        <textarea type="text" class="form-control" name="message" id="validationCustom01"
+                                  placeholder="Description of the email" maxlength="2000" style="min-height: 100px;"
+                                  required></textarea>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="ti-cta ti-green" onclick="submitform(this)">
+                        <a>Send Email</a>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </section>
+
+    <section class="tasks-cat" style="margin: auto;">
+        <div class="task-cat-header">
+            <div class="task-cat-tag task-cat-tag-coding">
+                <p>Un-Evaluated Quizzes</p>
+            </div>
+            <div class="task-cat-tag task-cat-tag-coding">
+                <p><%= quizzes.length %></p>
+            </div>
+        </div>
+        <div class="tasks-item-wrapper normal">
+
+            <% quizzes.forEach((quiz) => { %>
+            <div class="task-item-s normal">
+                <div class="ti-header">
+                    <i class="fa-regular fa-file-lines"></i>
+                    <p class="ti-header-cat"><%= quiz.test_name %></p>
+                    <p class="ti-header-id ti-advanced">Q0<%= Math.floor(quiz.test_id / 100) %></p>
+                </div>
+                <div class="ti-title">
+                    <h3>Quiz Description</h3>
+                    <p><%= quiz.test_description %></p>
+                    <h3>Start Time</h3>
+                    <p><%= quiz.test_dateTime %></p>
+                    <h3>End Time</h3>
+                    <p><%= quiz.test_endDateTime %></p>
+                    <h3>Type</h3>
+                    <p><%= quiz.test_type %></p>
+                </div>
+                <div class="ti-cta ti-green">
+                    <a href="/admin/power/quiz/evaluate/<%= quiz.test_id %>"
+                       style="padding: 0 !important; margin-top: auto;">Evaluate</a>
+                </div>
+            </div>
+
+            <% }) %>
+
+            <% if(quizzes.length === 0){ %>
+                <div class="tasks-empty">
+                    No quizzes to evaluate!
+                </div>
+            <% } %>
+
+        </div>
+    </section>
+
+</main>
+<script>
+    function submitform(element) {
+        document.getElementById(`${$(element).parent().attr('id')}`).requestSubmit();
+    }
+</script>
+<%- include("partials/footer", { active: "profile" }) %>
+</body>
+</html>

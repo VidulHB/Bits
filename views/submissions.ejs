@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BITS'25 | Submissions</title>
+    <link rel="icon" type="image/x-icon" href="/img/bits-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="/css/submissions.css" rel="stylesheet">
+    <script type='text/javascript'>
+        window.smartlook || (function (d) {
+            var o = smartlook = function () {
+                o.api.push(arguments)
+            }, h = d.getElementsByTagName('head')[0];
+            var c = d.createElement('script');
+            o.api = new Array();
+            c.async = true;
+            c.type = 'text/javascript';
+            c.charset = 'utf-8';
+            c.src = 'https://web-sdk.smartlook.com/recorder.js';
+            h.appendChild(c);
+        })(document);
+        smartlook('init', '5444d749ce5fad3604ce36be2187e6afb6d296c7', {region: 'eu'});
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body oncontextmenu="return false;" style=" -webkit-user-select: none; /* Safari */
+-ms-user-select: none; /* IE 10 and IE 11 */
+user-select: none; /* Standard syntax */">
+<%- include("partials/nav", { active: "" , user: username}) %>
+
+<header class="header">
+    <div class="header-welcome">Select Category:</div>
+    <select name="task-cat" id="cat-selector">
+        <option selected tagName="Coding">Coding</option>
+        <option tagName="Design">Design</option>
+        <option tagName="Explore">Explore</option>
+        <option tagName="Quizzes">Quizzes</option>
+    </select>
+    <div class="header-welcome">Select Task:</div>
+    <select class="task-selector selected" id="Coding">
+        <% let ci = 0 %>
+        <% coding_nums.forEach((data) => { %>
+        <option value="<%= data.task_id %>"
+        <% if(ci === 0){ %> selected
+                <% } %>
+        ><%= data.task_id %></option>
+        <% ci++ %>
+        <% }) %>
+    </select>
+    <select style="display: none;" class="task-selector" id="Design">
+        <% let di = 0 %>
+        <% design_nums.forEach((data) => { %>
+        <option value="<%= data.task_id %>"
+        <% if(di === 0){ %> selected
+                <% } %>
+        ><%= data.task_id %></option>
+        <% di++ %>
+        <% }) %>
+    </select>
+    <select style="display: none;" class="task-selector" id="Explore">
+        <% let ei = 0 %>
+        <% explore_nums.forEach((data) => { %>
+        <option value="<%= data.task_id %>"
+        <% if(ei === 0){ %> selected
+                <% } %>
+        ><%= data.task_id %></option>
+        <% ei++ %>
+        <% }) %>
+    </select>
+    <select style="display: none;" class="task-selector" id="Quizzes">
+        <% let qi = 0 %>
+        <% quizzes.forEach((data) => { %>
+            <option value="q<%= data.test_id %>"
+            <% if(qi === 0){ %> selected
+                    <% } %>
+            ><%= data.test_id %></option>
+            <% qi++ %>
+        <% }) %>
+    </select>
+</header>
+
+<main class="main">
+
+    <% let i = 0 %>
+    <% tasks.forEach((data) => { %>
+    <section id="<%= data.task_id %>" class="leaderboard"
+    <% if(i > 0){ %> style="display: none;"
+            <% } %>
+    >
+        <div class="thead">
+            <p class="tfield-no">#</p>
+            <p class="tfield-date">Date & Time</p>
+            <p class="tfield-name">Email</p>
+            <p class="tfield-material">Material</p>
+            <p class="tfield-info">Info</p>
+            <p class="tfield-points">Marks</p>
+            <p class="tfield-status">Status</p>
+            <p class="tfield-reviewer">Reviewer</p>
+        </div>
+        <table>
+            <tbody>
+            <% let si = 0 %>
+            <% data.submissions.forEach((sub) => { %>
+            <tr>
+                <th class="tfield-no">
+                    <%= si+1 %>
+                </th>
+                <td class="tfield-date">
+                    <%= sub.date.toString().replace("GMT+0000 (Coordinated Universal Time)", "") %>
+                </td>
+                <td class="tfield-name">
+                    <%= sub.email %>
+                </td>
+                <td class="tfield-material">
+                    <%= sub.material %>
+                </td>
+                <td class="tfield-info">
+                    <%= sub.info %>
+                </td>
+                <td class="tfield-points">
+                    <% if(sub.status === "Approved"){ %>
+                    <%= sub.marks %>
+                    <% }else{ %>
+                        N/A
+                    <% } %>
+                </td>
+                <td class="tfield-status"
+                    style="color:<% if(sub.status === "Pending"){ %> #CB9D00<% }else if(sub.status === "Declined"){ %> #FC2828<% }else{ %> #19C346<% } %>;">
+                    <%= sub.status %>
+                </td>
+                <td class="tfield-reviewer">
+                    <% if(sub.status === "Pending"){ %>
+                        N/A
+                    <% }else{ %>
+                    <%= sub.reviewer_id %>
+                    <% } %>
+                </td>
+            </tr>
+            <% si++ %>
+            <% }) %>
+            </tbody>
+        </table>
+    </section>
+    <% i++ %>
+    <% }) %>
+
+    <% let qui = 0 %>
+    <% quizzes.forEach((data) => { %>
+        <section id="q<%= data.test_id %>" class="leaderboard" style="display: none;">
+            <div class="thead">
+                <p class="tfield-q-no">#</p>
+                <p class="tfield-q-date">Date & Time</p>
+                <p class="tfield-q-user">Email</p>
+                <p class="tfield-q-pos">Position</p>
+                <p class="tfield-q-penalties">Penalties</p>
+                <p class="tfield-q-points">Marks</p>
+                <p class="tfield-q-status">Status</p>
+            </div>
+            <table>
+                <tbody>
+                <% let qsi = 0 %>
+                <% data.user_submissions.forEach((sub) => { %>
+                    <tr>
+                        <th class="tfield-q-no">
+                            <%= qsi+1 %>
+                        </th>
+                        <td class="tfield-q-date">
+                            <%= sub.started_time.toString().replace("GMT+0000 (Coordinated Universal Time)", "") %>
+                        </td>
+                        <td class="tfield-q-user">
+                            <%= sub.email %>
+                        </td>
+                        <td class="tfield-q-pos">
+                            <% if(data.evaluated === true){ %>
+                                <%= sub.position %>
+                            <% }else{ %>
+                                N/A
+                            <% } %>
+                        </td>
+                        <td class="tfield-q-penalties">
+                            <%= sub.penalties %>
+                        </td>
+                        <td class="tfield-q-points">
+                            <% if(data.evaluated === true){ %>
+                                <%= sub.marks_scored %>
+                            <% }else{ %>
+                                N/A
+                            <% } %>
+                        </td>
+                        <td class="tfield-q-status"
+                            style="color:<% if(data.evaluated === true){ %> #19C346 <% }else{ %> #CB9D00 <% } %>;">
+                            <% if(data.evaluated === true){ %> Evaluated<% }else{ %> Un-Evaluated<% } %>
+                        </td>
+                    </tr>
+                    <% qsi++ %>
+                <% }) %>
+                </tbody>
+            </table>
+        </section>
+        <% qui++ %>
+    <% }) %>
+
+</main>
+
+<script>
+    $('#cat-selector').on("change", function () {
+        $(".task-selector").css({"display": "none"})
+        $(".selected").removeClass('selected');
+        let selector = $("#cat-selector option:selected").attr('tagName')
+        $(`#${selector}`).css({"display": "block"})
+        $(`#${selector}`).addClass('selected')
+    })
+
+    $('select').on("change", function () {
+        $(".leaderboard").css({"display": "none"})
+        $(`#${$(".selected option:selected").attr('value')}`).css({"display": "block"})
+    })
+</script>
+
+<%- include("partials/footer", { active: "lead" }) %>
+</body>
+
+</html>

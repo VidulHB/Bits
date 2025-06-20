@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BITS '25 | Admin</title>
+    <link rel="icon" type="image/x-icon" href="/img/bits-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/review.css">
+    <script type='text/javascript'>
+        window.smartlook || (function (d) {
+            var o = smartlook = function () {
+                o.api.push(arguments)
+            }, h = d.getElementsByTagName('head')[0];
+            var c = d.createElement('script');
+            o.api = new Array();
+            c.async = true;
+            c.type = 'text/javascript';
+            c.charset = 'utf-8';
+            c.src = 'https://web-sdk.smartlook.com/recorder.js';
+            h.appendChild(c);
+        })(document);
+        smartlook('init', '5444d749ce5fad3604ce36be2187e6afb6d296c7', {region: 'eu'});
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+<%- include("partials/nav", {active: "", user: username}) %>
+
+<header class="header">
+    <div class="header-text">
+        <div class="header-welcome">
+            <h1>Welcome, <%= username %></h1>
+        </div>
+        <div class="header-user">
+            <p>Lets review some tasks.</p>
+        </div>
+    </div>
+</header>
+
+<main class="main">
+
+    <section class="info">
+        <header class="gl-title section-header">
+            <h3>Review Guidelines</h3>
+        </header>
+        <div class="gl-content">
+
+            <div class="gl-line">
+                <h4><i class="fa-solid fa-xmark"></i> Scoring Tasks</h4>
+                <p>  Award points to submissions fairly without any bias. Please refrain from approving tasks with less
+                    than 4 marks, just decline the task.</p>
+            </div>
+
+            <div class="gl-line">
+                <h4><i class="fa-solid fa-xmark"></i> Declining tasks</h4>
+                <p>  When declining tasks, provide a detailed reason so that the participant can fix issues and
+                    re-submit.</p>
+            </div>
+
+            <div class="gl-line">
+                <h4><i class="fa-solid fa-xmark"></i> Submission not working</h4>
+                <p>  If the submission does not function as it should, check the extra info provided by the participant
+                    for any info.</p>
+            </div>
+            <div class="gl-line">
+                <h4><i class="fa-solid fa-xmark"></i> Plagiarism and AI detection</h4>
+                <p>  Be aware of participants sharing the same submission and always run the submission through an AI
+                    detector like <a href="https://gptzero.me/">gptzero.me</a> or <a href="https://chatgpt.com/g/g-wspGz0NFg-ai-code-detector">AI Code Detector</a></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="tasks-cat">
+        <div class="task-cat-header">
+            <div class="task-cat-tag task-cat-tag-coding">
+                <p>Coding Tasks</p>
+            </div>
+            <div class="task-cat-tag task-cat-tag-coding">
+                <p><%= coding_tasks.length %></p>
+            </div>
+        </div>
+        <div class="tasks-item-wrapper">
+
+            <% coding_tasks.forEach((data) => { %>
+
+            <div class="task-item-s" data-task-id="00">
+                <div class="ti-header">
+                    <i class="fa-solid fa-code"></i>
+                    <p class="ti-header-cat"><%= data.task_title %></p>
+                    <% if(Math.floor(data.task_id / 100) < 10) { %>
+                    <% if(data.advanced === true) { %>
+                        <p class="ti-header-id ti-advanced">CA0<%= Math.floor(data.task_id / 100) %></p>
+                    <% } else { %>
+                        <p class="ti-header-id">C0<%= Math.floor(data.task_id / 100) %></p>
+                    <% } %>
+                    <% } else { %>
+                    <% if(data.advanced === true) { %>
+                        <p class="ti-header-id ti-advanced">CA<%= Math.floor(data.task_id / 100) %></p>
+                    <% } else { %>
+                        <p class="ti-header-id">C<%= Math.floor(data.task_id / 100) %></p>
+                    <% } %>
+                    <% } %>
+                </div>
+
+                <div class="ti-title">
+                    <h4>by <%= data.username %></h4>
+                    <h3>Material URL</h3>
+                    <p><a href="<%= data.project_url %>" target="_blank"><%= data.project_url %></a></p>
+                    <h3>Extra Info</h3>
+                    <p><%= data.feedback %></p>
+                </div>
+
+                <div style="margin-top: auto;">
+                    <div>
+                        <div class="ti-cta ti-approve">
+                            <a>Approve</a>
+                        </div>
+                        <form class="form" action="/admin/task/approve/<%= data.task_id %>/<%= data.userid %>"
+                              method="POST" style="display: none;">
+                            <div class="ti-approval">
+                                <input type="number" class="approve-reason" name="points" id="approvereason"
+                                       placeholder="Marks to be awarded" min="1" max="<%= data.max_marks %>" required>
+                            </div>
+                            <div class="ti-accept">
+                                <button class="ti-approve-options ti-approve" type="submit">Approve</button>
+                                <div class="ti-approve-options ti-close">
+                                    <a>Close</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <div class="ti-cta ti-decline">
+                            <a>Decline</a>
+                        </div>
+                        <form class="form" action="/admin/task/decline/<%= data.task_id %>/<%= data.userid %>"
+                              method="POST" style="display: none;">
+                            <div class="ti-denial">
+                                <input type="text" class="denial-reason" name="denialreason" id="denialreason"
+                                       placeholder="Enter Denial Reason" required>
+                            </div>
+                            <div class="ti-reject">
+                                <button class="ti-reject-options ti-decline" type="submit">Decline</button>
+                                <div class="ti-reject-options ti-close">
+                                    <a>Close</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <% }) %>
+
+            <% if(coding_tasks.length === 0){ %>
+                <div class="tasks-empty">
+                    No Coding tasks to review!
+                </div>
+            <% } %>
+
+        </div>
+    </section>
+    <section class="tasks-cat">
+        <div class="task-cat-header">
+            <div class="task-cat-tag task-cat-tag-coding">
+                <p>Design Tasks</p>
+            </div>
+            <div class="task-cat-tag task-cat-tag-coding">
+                <p><%= design_tasks.length %></p>
+            </div>
+        </div>
+        <div class="tasks-item-wrapper">
+
+            <% design_tasks.forEach((data) => { %>
+
+            <div class="task-item-s" data-task-id="00">
+                <div class="ti-header">
+                    <i class="fa-solid fa-pen"></i>
+                    <p class="ti-header-cat"><%= data.task_title %></p>
+                    <% if(Math.floor(data.task_id / 100) < 10) { %>
+                    <% if(data.advanced === true) { %>
+                        <p class="ti-header-id ti-advanced">DA0<%= Math.floor(data.task_id / 100) %></p>
+                    <% } else { %>
+                        <p class="ti-header-id">D0<%= Math.floor(data.task_id / 100) %></p>
+                    <% } %>
+                    <% } else { %>
+                    <% if(data.advanced === true) { %>
+                        <p class="ti-header-id ti-advanced">DA<%= Math.floor(data.task_id / 100) %></p>
+                    <% } else { %>
+                        <p class="ti-header-id">D<%= Math.floor(data.task_id / 100) %></p>
+                    <% } %>
+                    <% } %>
+                </div>
+
+                <div class="ti-title">
+                    <h4>by <%= data.username %></h4>
+                    <h3>Material URL</h3>
+                    <p><a href="<%= data.project_url %>" target="_blank"><%= data.project_url %></a></p>
+                    <h3>Extra Info</h3>
+                    <p><%= data.feedback %></p>
+                </div>
+
+                <div style="margin-top: auto;">
+                    <div>
+                        <div class="ti-cta ti-approve">
+                            <a>Approve</a>
+                        </div>
+                        <form class="form" action="/admin/task/approve/<%= data.task_id %>/<%= data.userid %>"
+                              method="POST" style="display: none;">
+                            <div class="ti-approval">
+                                <input type="number" class="approve-reason" name="points" id="approvereason"
+                                       placeholder="Marks to be awarded" min="1" max="<%= data.max_marks %>" required>
+                            </div>
+                            <div class="ti-accept">
+                                <button class="ti-approve-options ti-approve" type="submit">Approve</button>
+                                <div class="ti-approve-options ti-close">
+                                    <a>Close</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <div class="ti-cta ti-decline">
+                            <a>Decline</a>
+                        </div>
+                        <form class="form" action="/admin/task/decline/<%= data.task_id %>/<%= data.userid %>"
+                              method="POST" style="display: none;">
+                            <div class="ti-denial">
+                                <input type="text" class="denial-reason" name="denialreason" id="denialreason"
+                                       placeholder="Enter Denial Reason" required>
+                            </div>
+                            <div class="ti-reject">
+                                <button class="ti-reject-options ti-decline" type="submit">Decline</button>
+                                <div class="ti-reject-options ti-close">
+                                    <a>Close</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <% }) %>
+
+            <% if(design_tasks.length === 0){ %>
+                <div class="tasks-empty">
+                    No Design tasks to review!
+                </div>
+            <% } %>
+
+        </div>
+    </section>
+    <section class="tasks-cat">
+        <div class="task-cat-header">
+            <div class="task-cat-tag task-cat-tag-coding">
+                <p>Explore Tasks</p>
+            </div>
+            <div class="task-cat-tag task-cat-tag-coding">
+                <p><%= explore_tasks.length %></p>
+            </div>
+        </div>
+        <div class="tasks-item-wrapper">
+
+            <% explore_tasks.forEach((data) => { %>
+
+            <div class="task-item-s" data-task-id="00">
+                <div class="ti-header">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <p class="ti-header-cat"><%= data.task_title %></p>
+                    <% if(Math.floor(data.task_id / 100) < 10) { %>
+                    <% if(data.advanced === true) { %>
+                        <p class="ti-header-id ti-advanced">EA0<%= Math.floor(data.task_id / 100) %></p>
+                    <% } else { %>
+                        <p class="ti-header-id">E0<%= Math.floor(data.task_id / 100) %></p>
+                    <% } %>
+                    <% } else { %>
+                    <% if(data.advanced === true) { %>
+                        <p class="ti-header-id ti-advanced">EA<%= Math.floor(data.task_id / 100) %></p>
+                    <% } else { %>
+                        <p class="ti-header-id">E<%= Math.floor(data.task_id / 100) %></p>
+                    <% } %>
+                    <% } %>
+                </div>
+
+                <div class="ti-title">
+                    <h4>by <%= data.username %></h4>
+                    <h3>Material URL</h3>
+                    <p><a href="<%= data.project_url %>" target="_blank"><%= data.project_url %></a></p>
+                    <h3>Extra Info</h3>
+                    <p><%= data.feedback %></p>
+                </div>
+
+                <div style="margin-top: auto;">
+                    <div>
+                        <div class="ti-cta ti-approve">
+                            <a>Approve</a>
+                        </div>
+                        <form class="form" action="/admin/task/approve/<%= data.task_id %>/<%= data.userid %>"
+                              method="POST" style="display: none;">
+                            <div class="ti-approval">
+                                <input type="number" class="approve-reason" name="points" id="approvereason"
+                                       placeholder="Marks to be awarded" min="1" max="<%= data.max_marks %>" required>
+                            </div>
+                            <div class="ti-accept">
+                                <button class="ti-approve-options ti-approve" type="submit">Approve</button>
+                                <div class="ti-approve-options ti-close">
+                                    <a>Close</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <div class="ti-cta ti-decline">
+                            <a>Decline</a>
+                        </div>
+                        <form class="form" action="/admin/task/decline/<%= data.task_id %>/<%= data.userid %>"
+                              method="POST" style="display: none;">
+                            <div class="ti-denial">
+                                <input type="text" class="denial-reason" name="denialreason" id="denialreason"
+                                       placeholder="Enter Denial Reason" required>
+                            </div>
+                            <div class="ti-reject">
+                                <button class="ti-reject-options ti-decline" type="submit">Decline</button>
+                                <div class="ti-reject-options ti-close">
+                                    <a>Close</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <% }) %>
+
+            <% if(explore_tasks.length === 0){ %>
+                <div class="tasks-empty">
+                    No Explore tasks to review!
+                </div>
+            <% } %>
+
+        </div>
+    </section>
+</main>
+<script>
+    $(".ti-cta").on("click", function () {
+        $('body').find(".form").css("display", "none")
+        $(this).parent().find(".form").css("display", "block")
+    });
+    $(".ti-close").on("click", function () {
+        $('body').find(".form").css("display", "none")
+    });
+</script>
+<%- include("partials/footer", { active: "profile" }) %>
+</body>
+</html>
